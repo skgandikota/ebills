@@ -58,7 +58,7 @@ function HeroAnimation() {
   }, []);
 
   return (
-    <div className="relative w-full max-w-lg mx-auto mt-12" aria-hidden="true">
+    <div className="relative w-full max-w-lg mx-auto" aria-hidden="true">
       {/* Glow background */}
       <div className="absolute -inset-4 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 rounded-3xl blur-2xl" />
 
@@ -529,40 +529,47 @@ export default function HomePage() {
       </nav>
 
       {/* ── Hero ── */}
-      <section className="relative py-16 lg:py-28 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Badge variant="secondary" className="mb-6 text-sm px-4 py-1.5">
-            100% Free — No Credit Card — No Limits
-          </Badge>
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[1.1]">
-            Create Professional
-            <br />
-            <span className="text-primary">Bills &amp; Invoices</span>
-            <br />
-            In Seconds
-          </h1>
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-4">
-            Free online bill generator with <strong>16 templates</strong> — Invoice, GST Invoice,
-            Receipt, Quotation, Rent Receipt, Shopping Receipt, Subscription Invoice,
-            Purchase Order, Expense Report, Donation Receipt &amp; more.
-          </p>
-          <p className="text-base text-muted-foreground max-w-2xl mx-auto mb-10">
-            Generate PDF instantly. Save all bills securely. Client address book. Multi-currency.
-            Drag-and-drop template builder. Dark mode. Works on mobile.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-            {cta}
-          </div>
-          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
-            <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> No signup fees</span>
-            <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> Unlimited bills</span>
-            <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> Instant PDF</span>
-            <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> GST compliant</span>
-            <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> Works offline</span>
-          </div>
+      <section className="relative py-12 lg:py-24 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-[1fr_1fr] gap-10 lg:gap-16 items-center">
+            {/* Animation — shows first on mobile */}
+            <div className="order-1 lg:order-2">
+              <HeroAnimation />
+            </div>
 
-          {/* Animated Demo */}
-          <HeroAnimation />
+            {/* Text content — shows second on mobile */}
+            <div className="order-2 lg:order-1 text-center lg:text-left">
+              <Badge variant="secondary" className="mb-6 text-sm px-4 py-1.5">
+                100% Free — No Credit Card — No Limits
+              </Badge>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 leading-[1.1]">
+                Create Professional
+                <br />
+                <span className="text-primary">Bills &amp; Invoices</span>
+                <br />
+                In Seconds
+              </h1>
+              <p className="text-lg sm:text-xl text-muted-foreground mb-4">
+                Free online bill generator with <strong>16 templates</strong> — Invoice, GST Invoice,
+                Receipt, Quotation, Rent Receipt, Shopping Receipt, Subscription Invoice,
+                Purchase Order, Expense Report, Donation Receipt &amp; more.
+              </p>
+              <p className="text-base text-muted-foreground mb-8">
+                Generate PDF instantly. Save all bills securely. Client address book. Multi-currency.
+                Drag-and-drop template builder. Dark mode. Works on mobile.
+              </p>
+              <div className="flex flex-col sm:flex-row items-center lg:items-start gap-4 mb-6">
+                {cta}
+              </div>
+              <div className="flex flex-wrap justify-center lg:justify-start gap-x-5 gap-y-2 text-sm text-muted-foreground">
+                <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> No signup fees</span>
+                <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> Unlimited bills</span>
+                <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> Instant PDF</span>
+                <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> GST compliant</span>
+                <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> Works offline</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
