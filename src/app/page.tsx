@@ -587,6 +587,7 @@ export default function HomePage() {
             <a href="#features" className="hover:text-foreground transition-colors">Features</a>
             <a href="#how-it-works" className="hover:text-foreground transition-colors">How It Works</a>
             <a href="#faq" className="hover:text-foreground transition-colors">FAQ</a>
+            <Link href="/blog" className="hover:text-foreground transition-colors">Blog</Link>
           </div>
           <div className="flex items-center gap-3">
             {user ? (
@@ -964,27 +965,27 @@ export default function HomePage() {
             <div>
               <h4 className="font-semibold text-sm mb-3">Templates</h4>
               <ul className="space-y-1.5 text-sm text-muted-foreground">
-                <li>Standard Invoice</li>
-                <li>GST Tax Invoice</li>
-                <li>Payment Receipt</li>
-                <li>Quotation / Estimate</li>
-                <li>Rent Receipt</li>
-                <li>Shopping Receipt</li>
-                <li>Subscription Invoice</li>
-                <li>Purchase Order</li>
+                <li><Link href="/invoice-generator" className="hover:text-foreground">Standard Invoice</Link></li>
+                <li><Link href="/gst-invoice-generator" className="hover:text-foreground">GST Tax Invoice</Link></li>
+                <li><Link href="/receipt-generator" className="hover:text-foreground">Payment Receipt</Link></li>
+                <li><Link href="/quotation-generator" className="hover:text-foreground">Quotation / Estimate</Link></li>
+                <li><Link href="/rent-receipt-generator" className="hover:text-foreground">Rent Receipt</Link></li>
+                <li><Link href="/shopping-receipt-generator" className="hover:text-foreground">Shopping Receipt</Link></li>
+                <li><Link href="/subscription-invoice-generator" className="hover:text-foreground">Subscription Invoice</Link></li>
+                <li><Link href="/purchase-order-generator" className="hover:text-foreground">Purchase Order</Link></li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold text-sm mb-3">More Templates</h4>
               <ul className="space-y-1.5 text-sm text-muted-foreground">
-                <li>Proforma Invoice</li>
-                <li>Delivery Challan</li>
-                <li>Credit Note</li>
-                <li>Freelancer Invoice</li>
-                <li>Expense Report</li>
-                <li>Donation Receipt</li>
-                <li>Service Invoice</li>
-                <li>Export Invoice</li>
+                <li><Link href="/proforma-invoice-generator" className="hover:text-foreground">Proforma Invoice</Link></li>
+                <li><Link href="/delivery-challan-generator" className="hover:text-foreground">Delivery Challan</Link></li>
+                <li><Link href="/credit-note-generator" className="hover:text-foreground">Credit Note</Link></li>
+                <li><Link href="/freelance-invoice-generator" className="hover:text-foreground">Freelancer Invoice</Link></li>
+                <li><Link href="/expense-report-generator" className="hover:text-foreground">Expense Report</Link></li>
+                <li><Link href="/donation-receipt-generator" className="hover:text-foreground">Donation Receipt</Link></li>
+                <li><Link href="/service-invoice-generator" className="hover:text-foreground">Service Invoice</Link></li>
+                <li><Link href="/export-invoice-generator" className="hover:text-foreground">Export Invoice</Link></li>
               </ul>
             </div>
             <div>
@@ -994,6 +995,7 @@ export default function HomePage() {
                 <li><a href="#features" className="hover:text-foreground">Features</a></li>
                 <li><a href="#how-it-works" className="hover:text-foreground">How It Works</a></li>
                 <li><a href="#faq" className="hover:text-foreground">FAQ</a></li>
+                <li><Link href="/blog" className="hover:text-foreground">Blog</Link></li>
                 <li><a href="mailto:support@ebills.co.in" className="hover:text-foreground">Contact</a></li>
               </ul>
             </div>
