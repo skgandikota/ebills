@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard/
+
+Sitemap: https://ebills.co.in/sitemap.xml
+Host: https://ebills.co.in

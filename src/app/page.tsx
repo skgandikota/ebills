@@ -20,65 +20,195 @@ import {
   Truck,
   RotateCcw,
   UserCircle,
+  Check,
+  Paintbrush,
+  Moon,
+  Smartphone,
+  Lock,
+  Clock,
+  Layers,
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const FEATURES = [
+/* ─── Template data with SEO-rich descriptions ─── */
+const TEMPLATES = [
   {
+    id: "standard-invoice",
     icon: FileText,
-    title: "8+ Bill Templates",
-    description: "Standard Invoice, GST Invoice, Receipt, Quotation, and more — all professionally designed.",
+    name: "Standard Invoice",
+    shortDesc: "Clean & professional",
+    color: "#1e293b",
+    longDesc:
+      "A clean, professional invoice template suitable for any business. Includes business details, client info, itemized line items, taxes, discounts, and total calculation. Perfect for product sales, service billing, and general invoicing.",
+    useCases: ["Product sales", "Service billing", "B2B invoicing", "Freelance work"],
   },
   {
-    icon: Zap,
-    title: "Instant PDF Generation",
-    description: "Generate and download high-quality PDFs right from your browser. No server processing needed.",
+    id: "gst-invoice",
+    icon: IndianRupee,
+    name: "GST Invoice",
+    shortDesc: "India GST compliant",
+    color: "#7c3aed",
+    longDesc:
+      "Fully GST-compliant tax invoice with GSTIN fields, HSN/SAC codes, CGST/SGST/IGST breakdowns, and amount in words. Mandatory for registered Indian businesses under the Goods & Services Tax Act.",
+    useCases: ["Indian businesses", "GST filing", "Tax compliance", "B2B & B2C sales"],
   },
   {
-    icon: Shield,
-    title: "Secure & Private",
-    description: "Your bills are stored in your own private repository. Only you can access them.",
+    id: "proforma-invoice",
+    icon: ClipboardList,
+    name: "Proforma Invoice",
+    shortDesc: "Pre-delivery billing",
+    color: "#0f766e",
+    longDesc:
+      "Issue a proforma invoice before delivering goods or services. Serves as a declaration of intent, helping buyers arrange payments and import licenses. Not a demand for payment but a commitment to deliver.",
+    useCases: ["International trade", "Pre-payment requests", "Customs declarations", "Advance billing"],
   },
   {
-    icon: Download,
-    title: "Always Available",
-    description: "Access all your past bills anytime. Re-download, duplicate, or modify as needed.",
+    id: "receipt",
+    icon: Receipt,
+    name: "Payment Receipt",
+    shortDesc: "Payment acknowledgment",
+    color: "#059669",
+    longDesc:
+      "Generate professional payment receipts to acknowledge payments received. Includes payment method, date, amount, and payer details. Essential for cash transactions, rent payments, and service fee collections.",
+    useCases: ["Cash payments", "Rent receipts", "Service fee confirmation", "Donation receipts"],
   },
   {
-    icon: Users,
-    title: "Client Management",
-    description: "Save client details for quick re-use. Never re-type the same information.",
+    id: "quotation",
+    icon: Calculator,
+    name: "Quotation / Estimate",
+    shortDesc: "Cost estimates & proposals",
+    color: "#d97706",
+    longDesc:
+      "Create detailed quotations and cost estimates for potential clients. List services, products, rates, and terms. Convert accepted quotes to invoices with one click. Great for contractors, agencies, and consultants.",
+    useCases: ["Project proposals", "Cost estimates", "Service quotes", "Tender responses"],
   },
   {
-    icon: Globe,
-    title: "Multi-Currency",
-    description: "Support for 9+ currencies with automatic formatting. Perfect for global businesses.",
+    id: "delivery-challan",
+    icon: Truck,
+    name: "Delivery Challan",
+    shortDesc: "Goods shipment document",
+    color: "#dc2626",
+    longDesc:
+      "A delivery challan accompanies goods in transit when no sale is involved — for job work, samples, exhibitions, or branch transfers. Includes consignee details, transport info, and itemized goods list.",
+    useCases: ["Job work delivery", "Sample shipments", "Branch transfers", "Exhibition goods"],
+  },
+  {
+    id: "credit-note",
+    icon: RotateCcw,
+    name: "Credit Note",
+    shortDesc: "Returns & adjustments",
+    color: "#e11d48",
+    longDesc:
+      "Issue credit notes for returned goods, billing errors, or post-sale discounts. References the original invoice and clearly shows the credited amount. Required under GST for tax adjustments.",
+    useCases: ["Sales returns", "Billing corrections", "GST adjustments", "Post-sale discounts"],
+  },
+  {
+    id: "freelancer-invoice",
+    icon: UserCircle,
+    name: "Freelancer Invoice",
+    shortDesc: "For consultants & freelancers",
+    color: "#2563eb",
+    longDesc:
+      "Designed for freelancers, consultants, and independent contractors. Features project summary, hourly rate display, milestone tracking, and a clean modern layout that looks great on any project.",
+    useCases: ["Consulting fees", "Hourly billing", "Project milestones", "Contract work"],
   },
 ];
 
-const TEMPLATES = [
-  { icon: FileText, name: "Standard Invoice", desc: "Clean & professional" },
-  { icon: IndianRupee, name: "GST Invoice", desc: "India GST compliant" },
-  { icon: ClipboardList, name: "Proforma Invoice", desc: "Pre-delivery billing" },
-  { icon: Receipt, name: "Payment Receipt", desc: "Payment acknowledgment" },
-  { icon: Calculator, name: "Quotation", desc: "Cost estimates" },
-  { icon: Truck, name: "Delivery Challan", desc: "Goods shipment" },
-  { icon: RotateCcw, name: "Credit Note", desc: "Returns & corrections" },
-  { icon: UserCircle, name: "Freelancer Invoice", desc: "For consultants" },
+const FEATURES = [
+  { icon: FileText, title: "8+ Professional Templates", desc: "Standard Invoice, GST Invoice, Receipt, Quotation, Proforma, Delivery Challan, Credit Note, Freelancer Invoice — and custom templates you build yourself." },
+  { icon: Zap, title: "Instant PDF Download", desc: "Generate high-quality A4 PDFs directly in your browser. No server upload needed. Your data stays private." },
+  { icon: Shield, title: "Secure Cloud Storage", desc: "Every bill is auto-saved to your private, encrypted cloud repository. Access from any device, anytime." },
+  { icon: Users, title: "Client Address Book", desc: "Save client details once, reuse everywhere. Smart search and one-click autofill across all your bills." },
+  { icon: Paintbrush, title: "Drag & Drop Builder", desc: "Build custom bill layouts by dragging sections. Choose colors, reorder blocks, add custom text. Your brand, your way." },
+  { icon: Globe, title: "Multi-Currency Support", desc: "USD, EUR, GBP, INR, AUD, CAD, JPY, SGD, AED — 9+ currencies with automatic locale formatting." },
+  { icon: Moon, title: "Dark Mode", desc: "Work comfortably day or night. System-aware dark mode that respects your OS preferences." },
+  { icon: Smartphone, title: "Mobile Friendly & PWA", desc: "Works on phone, tablet, or desktop. Install as an app for quick access — even works offline." },
+  { icon: Lock, title: "100% Free, No Limits", desc: "No hidden fees, no paid plans, no bill limits. Create as many bills as you need. Forever free." },
+  { icon: Download, title: "Duplicate & Reuse", desc: "Clone any existing bill with one click. Perfect for recurring invoices or similar clients." },
+  { icon: Clock, title: "Auto Bill Numbering", desc: "Smart per-template auto-numbering: INV-00001, GST-00001, RCT-00001. Never duplicate a number." },
+  { icon: Layers, title: "Logo & Branding", desc: "Upload your business logo. It appears on every bill. Drag-drop or click to upload — up to 500KB." },
 ];
 
 const STEPS = [
-  { step: "1", title: "Sign In", description: "Quick login with Google or GitHub — no lengthy signup forms." },
-  { step: "2", title: "Choose & Fill", description: "Pick a template and fill in your business & client details." },
-  { step: "3", title: "Download & Save", description: "Generate PDF instantly. Your bill is auto-saved for later." },
+  { step: "1", title: "Sign In Free", desc: "One-click login with Google or GitHub. No forms, no credit card, no email verification." },
+  { step: "2", title: "Pick a Template & Fill", desc: "Choose from 8+ templates or build your own. Fill business, client, items — live preview updates instantly." },
+  { step: "3", title: "Download, Save & Share", desc: "Download a professional A4 PDF. Your bill is auto-saved. Duplicate, edit, or re-download anytime." },
 ];
+
+const FAQ = [
+  { q: "Is eBills really free?", a: "Yes, 100% free. No hidden charges, no premium tiers, no bill limits. We believe billing tools should be accessible to everyone." },
+  { q: "What bill types can I create?", a: "Standard Invoices, GST Tax Invoices (India-compliant), Proforma Invoices, Payment Receipts, Quotations/Estimates, Delivery Challans, Credit Notes, and Freelancer Invoices." },
+  { q: "Is my data secure?", a: "Absolutely. Your bills are stored in your own private cloud repository. We use OAuth authentication — we never see or store your password." },
+  { q: "Can I use it on mobile?", a: "Yes! eBills works on any device — phone, tablet, or desktop. You can even install it as a PWA (Progressive Web App) for quick access." },
+  { q: "Does it support GST billing?", a: "Yes. Our GST Invoice template includes GSTIN fields, HSN/SAC codes, CGST/SGST/IGST tax breakdowns, and amount in words — fully compliant with Indian GST requirements." },
+  { q: "Can I add my logo?", a: "Yes. Upload your business logo (up to 500KB) and it will appear on all your bills. Supports JPG, PNG, and SVG." },
+];
+
+/* ─── Structured Data for SEO ─── */
+function JsonLd() {
+  const data = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        name: "eBills",
+        url: "https://ebills.co.in",
+        applicationCategory: "BusinessApplication",
+        operatingSystem: "All",
+        offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
+        description:
+          "Free online bill generator and invoice maker. Create GST invoices, receipts, quotations, delivery challans, credit notes & freelancer invoices. Download PDF instantly.",
+        featureList: [
+          "Invoice Generator",
+          "GST Invoice",
+          "Payment Receipt",
+          "Quotation Maker",
+          "PDF Download",
+          "Multi-Currency",
+          "Client Management",
+          "Custom Template Builder",
+          "Dark Mode",
+          "PWA Support",
+        ],
+      },
+      {
+        "@type": "Organization",
+        name: "eBills",
+        url: "https://ebills.co.in",
+        logo: "https://ebills.co.in/icons/icon-192.svg",
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: FAQ.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: "https://ebills.co.in" },
+          { "@type": "ListItem", position: 2, name: "Dashboard", item: "https://ebills.co.in/dashboard" },
+          { "@type": "ListItem", position: 3, name: "Create Bill", item: "https://ebills.co.in/dashboard/bills/new" },
+        ],
+      },
+    ],
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
 
 export default function HomePage() {
   const { user, loading } = useAuth();
   const [showLogin, setShowLogin] = useState(false);
+  const [activeTemplate, setActiveTemplate] = useState(0);
 
-  // Auto-close login modal and redirect after successful login
   useEffect(() => {
     if (user && showLogin) {
       setShowLogin(false);
@@ -93,176 +223,336 @@ export default function HomePage() {
     );
   }
 
+  const cta = user ? (
+    <Link href="/dashboard">
+      <Button size="lg" className="text-lg px-8 h-14">
+        Go to Dashboard <ArrowRight className="ml-2 h-5 w-5" />
+      </Button>
+    </Link>
+  ) : (
+    <Button size="lg" className="text-lg px-8 h-14" onClick={() => setShowLogin(true)}>
+      Start Creating Bills — Free <ArrowRight className="ml-2 h-5 w-5" />
+    </Button>
+  );
+
+  const t = TEMPLATES[activeTemplate];
+
   return (
     <div className="min-h-screen">
-      {/* Nav */}
+      <JsonLd />
+
+      {/* ── Nav ── */}
       <nav className="border-b bg-background/95 backdrop-blur sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <Link href="/" className="text-2xl font-bold">
             e<span className="text-primary">Bills</span>
           </Link>
-          <div className="flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-6 text-sm text-muted-foreground">
+            <a href="#templates" className="hover:text-foreground transition-colors">Templates</a>
+            <a href="#features" className="hover:text-foreground transition-colors">Features</a>
+            <a href="#how-it-works" className="hover:text-foreground transition-colors">How It Works</a>
+            <a href="#faq" className="hover:text-foreground transition-colors">FAQ</a>
+          </div>
+          <div className="flex items-center gap-3">
             {user ? (
               <Link href="/dashboard">
-                <Button>
-                  Dashboard <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
+                <Button size="sm">Dashboard <ArrowRight className="ml-1 h-3.5 w-3.5" /></Button>
               </Link>
             ) : (
-              <Button onClick={() => setShowLogin(true)}>Get Started</Button>
+              <Button size="sm" onClick={() => setShowLogin(true)}>Get Started Free</Button>
             )}
           </div>
         </div>
       </nav>
 
-      {/* Hero */}
-      <section className="relative py-20 lg:py-32 overflow-hidden">
+      {/* ── Hero ── */}
+      <section className="relative py-16 lg:py-28 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Badge variant="secondary" className="mb-6 text-sm px-4 py-1">
-            100% Free — No Credit Card Required
+          <Badge variant="secondary" className="mb-6 text-sm px-4 py-1.5">
+            100% Free — No Credit Card — No Limits
           </Badge>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6">
-            Create Professional Bills
+          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[1.1]">
+            Create Professional
             <br />
-            <span className="text-primary">In Seconds</span>
+            <span className="text-primary">Bills &amp; Invoices</span>
+            <br />
+            In Seconds
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
-            Free online bill generator with 8+ templates. Create invoices, GST
-            bills, receipts, quotations — generate PDF instantly and keep all
-            your bills organized.
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-4">
+            Free online bill generator with <strong>8+ templates</strong> — Standard Invoice, GST Invoice,
+            Payment Receipt, Quotation, Proforma Invoice, Delivery Challan,
+            Credit Note &amp; Freelancer Invoice.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            {user ? (
-              <Link href="/dashboard">
-                <Button size="lg" className="text-lg px-8 h-14">
-                  Go to Dashboard <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-            ) : (
-              <Button
-                size="lg"
-                className="text-lg px-8 h-14"
-                onClick={() => setShowLogin(true)}
-              >
-                Start Creating Bills <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            )}
+          <p className="text-base text-muted-foreground max-w-2xl mx-auto mb-10">
+            Generate PDF instantly. Save all bills securely. Client address book. Multi-currency.
+            Drag-and-drop template builder. Dark mode. Works on mobile.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+            {cta}
+          </div>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+            <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> No signup fees</span>
+            <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> Unlimited bills</span>
+            <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> Instant PDF</span>
+            <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> GST compliant</span>
+            <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> Works offline</span>
           </div>
         </div>
       </section>
 
-      {/* Templates */}
-      <section className="py-20 bg-muted/50">
+      {/* ── Templates — Interactive Tabs ── */}
+      <section id="templates" className="py-16 lg:py-20 bg-muted/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">
-              Professional Templates for Every Need
+          <div className="text-center mb-10">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-3">
+              Professional Bill Templates for Every Need
             </h2>
-            <p className="text-muted-foreground text-lg">
-              Choose from our collection of professionally designed templates
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Choose a template below to see details. Every template generates a print-ready A4 PDF with your branding.
             </p>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {TEMPLATES.map((t) => (
-              <Card key={t.name} className="text-center hover:shadow-lg transition-shadow">
-                <CardContent className="pt-6 pb-4">
-                  <t.icon className="h-10 w-10 mx-auto mb-3 text-primary" />
-                  <h3 className="font-semibold text-sm">{t.name}</h3>
-                  <p className="text-xs text-muted-foreground mt-1">{t.desc}</p>
-                </CardContent>
-              </Card>
+
+          {/* Template Tabs */}
+          <div className="flex flex-wrap justify-center gap-2 mb-8">
+            {TEMPLATES.map((tmpl, i) => (
+              <button
+                key={tmpl.id}
+                onClick={() => setActiveTemplate(i)}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-all ${
+                  i === activeTemplate
+                    ? "text-white shadow-lg scale-105"
+                    : "bg-background text-foreground border hover:shadow-md"
+                }`}
+                style={i === activeTemplate ? { backgroundColor: tmpl.color } : {}}
+              >
+                <tmpl.icon className="h-4 w-4" />
+                <span className="hidden sm:inline">{tmpl.name}</span>
+                <span className="sm:hidden">{tmpl.name.split(" ")[0]}</span>
+              </button>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* Features */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">
-              Everything You Need to Bill Like a Pro
-            </h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {FEATURES.map((f) => (
-              <Card key={f.title} className="border-0 shadow-none">
-                <CardContent className="pt-6">
-                  <f.icon className="h-10 w-10 text-primary mb-4" />
-                  <h3 className="font-semibold text-lg mb-2">{f.title}</h3>
-                  <p className="text-muted-foreground text-sm">
-                    {f.description}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How it works */}
-      <section className="py-20 bg-muted/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">
-              Three Steps. That&apos;s It.
-            </h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {STEPS.map((s) => (
-              <div key={s.step} className="text-center">
-                <div className="w-14 h-14 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
-                  {s.step}
+          {/* Active Template Detail */}
+          <Card className="max-w-4xl mx-auto overflow-hidden">
+            <div className="h-1.5" style={{ backgroundColor: t.color }} />
+            <CardContent className="p-6 sm:p-8">
+              <div className="flex items-start gap-4 mb-4">
+                <div
+                  className="p-3 rounded-xl text-white shrink-0"
+                  style={{ backgroundColor: t.color }}
+                >
+                  <t.icon className="h-8 w-8" />
                 </div>
-                <h3 className="font-semibold text-lg mb-2">{s.title}</h3>
-                <p className="text-muted-foreground text-sm">
-                  {s.description}
-                </p>
+                <div>
+                  <h3 className="text-2xl font-bold">{t.name}</h3>
+                  <p className="text-muted-foreground mt-1">{t.longDesc}</p>
+                </div>
+              </div>
+              <div className="mt-4">
+                <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                  Best For
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {t.useCases.map((uc) => (
+                    <Badge key={uc} variant="secondary" className="text-xs">
+                      {uc}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+              <div className="mt-6">
+                {user ? (
+                  <Link href={`/dashboard/bills/new?template=${t.id}`}>
+                    <Button style={{ backgroundColor: t.color }}>
+                      Use This Template <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </Link>
+                ) : (
+                  <Button style={{ backgroundColor: t.color }} onClick={() => setShowLogin(true)}>
+                    Get Started with {t.name.split(" ")[0]} <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* SEO: hidden text for all templates (crawlable but not visually redundant) */}
+          <div className="sr-only">
+            <h3>All Bill Templates Available</h3>
+            {TEMPLATES.map((tmpl) => (
+              <div key={tmpl.id}>
+                <h4>{tmpl.name}</h4>
+                <p>{tmpl.longDesc}</p>
+                <p>Use cases: {tmpl.useCases.join(", ")}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20">
+      {/* ── Features Grid ── */}
+      <section id="features" className="py-16 lg:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-3">
+              Everything You Need to Bill Like a Pro
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-xl mx-auto">
+              From invoice generation to client management — all features, all free.
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {FEATURES.map((f) => (
+              <Card key={f.title} className="hover:shadow-lg transition-shadow">
+                <CardContent className="pt-6">
+                  <f.icon className="h-9 w-9 text-primary mb-3" />
+                  <h3 className="font-semibold text-lg mb-1">{f.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{f.desc}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── How It Works ── */}
+      <section id="how-it-works" className="py-16 lg:py-20 bg-muted/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-3">
+              Three Steps. That&apos;s It.
+            </h2>
+            <p className="text-muted-foreground text-lg">
+              Create your first professional bill in under 2 minutes.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {STEPS.map((s) => (
+              <div key={s.step} className="text-center">
+                <div className="w-16 h-16 bg-primary text-primary-foreground rounded-2xl flex items-center justify-center text-3xl font-bold mx-auto mb-4 shadow-lg">
+                  {s.step}
+                </div>
+                <h3 className="font-bold text-xl mb-2">{s.title}</h3>
+                <p className="text-muted-foreground">{s.desc}</p>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-10">{cta}</div>
+        </div>
+      </section>
+
+      {/* ── FAQ ── */}
+      <section id="faq" className="py-16 lg:py-20">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-3">
+              Frequently Asked Questions
+            </h2>
+          </div>
+          <div className="space-y-6">
+            {FAQ.map((f, i) => (
+              <div key={i} className="border-b pb-5">
+                <h3 className="font-semibold text-lg mb-1">{f.q}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">{f.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA ── */}
+      <section className="py-16 lg:py-20 bg-primary text-primary-foreground">
         <div className="max-w-3xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
             Ready to Create Your First Bill?
           </h2>
-          <p className="text-muted-foreground text-lg mb-8">
-            Join eBills — completely free. No hidden fees, no limitations on
-            bill generation.
+          <p className="text-primary-foreground/80 text-lg mb-8 max-w-xl mx-auto">
+            Join thousands of freelancers, small businesses, and consultants who
+            create professional bills with eBills. It&apos;s completely free — always.
           </p>
           {user ? (
             <Link href="/dashboard">
-              <Button size="lg" className="text-lg px-8 h-14">
+              <Button size="lg" variant="secondary" className="text-lg px-8 h-14">
                 Go to Dashboard <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
           ) : (
-            <Button
-              size="lg"
-              className="text-lg px-8 h-14"
-              onClick={() => setShowLogin(true)}
-            >
-              Get Started — It&apos;s Free{" "}
-              <ArrowRight className="ml-2 h-5 w-5" />
+            <Button size="lg" variant="secondary" className="text-lg px-8 h-14" onClick={() => setShowLogin(true)}>
+              Get Started — It&apos;s Free <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           )}
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} eBills. All rights reserved.
+      {/* ── SEO-rich keyword section ── */}
+      <section className="py-12 bg-muted/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="font-bold text-lg mb-4">Create Bills Online — Free Invoice Generator</h2>
+          <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+            eBills is a <strong>free online bill generator</strong> and <strong>invoice maker</strong> that lets you create
+            professional bills, invoices, and receipts in seconds. Whether you need a <strong>GST invoice</strong>,{" "}
+            <strong>payment receipt</strong>, <strong>quotation</strong>, <strong>proforma invoice</strong>,{" "}
+            <strong>delivery challan</strong>, <strong>credit note</strong>, or <strong>freelancer invoice</strong> —
+            eBills has the perfect template. <strong>Download PDF</strong> instantly with your business logo and branding.
           </p>
-          <div className="flex items-center gap-6 text-sm text-muted-foreground">
-            <a href="mailto:support@ebills.co.in" className="hover:text-foreground">
-              Contact
-            </a>
+          <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+            Perfect for <strong>small businesses</strong>, <strong>freelancers</strong>, <strong>consultants</strong>,{" "}
+            <strong>startups</strong>, <strong>shop owners</strong>, and <strong>service providers</strong> across India and worldwide.
+            Supports <strong>multi-currency billing</strong> (INR, USD, EUR, GBP, AUD, CAD, JPY, SGD, AED) with automatic formatting.
+          </p>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            Features: <strong>bill generator</strong>, <strong>invoice template free</strong>,{" "}
+            <strong>bill format download</strong>, <strong>receipt maker online</strong>,{" "}
+            <strong>GST bill software free</strong>, <strong>online billing software</strong>,{" "}
+            <strong>create invoice online free</strong>, <strong>professional invoice generator</strong>,{" "}
+            <strong>billing app</strong>, <strong>estimate maker</strong>, <strong>quotation generator free</strong>.
+          </p>
+        </div>
+      </section>
+
+      {/* ── Footer ── */}
+      <footer className="border-t py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid sm:grid-cols-3 gap-8 mb-8">
+            <div>
+              <h3 className="font-bold text-lg mb-3">
+                e<span className="text-primary">Bills</span>
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Free online bill generator. Create invoices, receipts, quotations &amp; more with professional templates.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold text-sm mb-3">Templates</h4>
+              <ul className="space-y-1.5 text-sm text-muted-foreground">
+                <li>Standard Invoice</li>
+                <li>GST Tax Invoice</li>
+                <li>Payment Receipt</li>
+                <li>Quotation / Estimate</li>
+                <li>Proforma Invoice</li>
+                <li>Delivery Challan</li>
+                <li>Credit Note</li>
+                <li>Freelancer Invoice</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold text-sm mb-3">Links</h4>
+              <ul className="space-y-1.5 text-sm text-muted-foreground">
+                <li><a href="#templates" className="hover:text-foreground">Templates</a></li>
+                <li><a href="#features" className="hover:text-foreground">Features</a></li>
+                <li><a href="#how-it-works" className="hover:text-foreground">How It Works</a></li>
+                <li><a href="#faq" className="hover:text-foreground">FAQ</a></li>
+                <li><a href="mailto:support@ebills.co.in" className="hover:text-foreground">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-xs text-muted-foreground">
+              &copy; {new Date().getFullYear()} eBills. All rights reserved. Made in India.
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Free bill generator | Invoice maker | Receipt generator | GST billing software
+            </p>
           </div>
         </div>
       </footer>
