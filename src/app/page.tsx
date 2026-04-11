@@ -22,7 +22,8 @@ import {
   UserCircle,
 } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const FEATURES = [
   {
@@ -77,6 +78,15 @@ const STEPS = [
 export default function HomePage() {
   const { user, loading } = useAuth();
   const [showLogin, setShowLogin] = useState(false);
+  const router = useRouter();
+
+  // Close modal and redirect on successful login
+  useEffect(() => {
+    if (user && showLogin) {
+      setShowLogin(false);
+      router.push("/dashboard");
+    }
+  }, [user, showLogin, router]);
 
   if (loading) {
     return (
