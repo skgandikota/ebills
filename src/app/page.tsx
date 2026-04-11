@@ -532,8 +532,15 @@ export default function HomePage() {
       <section className="relative py-12 lg:py-24 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-[1fr_1fr] gap-10 lg:gap-16 items-center">
-            {/* Animation — shows first on mobile */}
+            {/* Trust badges + Animation — shows first on mobile */}
             <div className="order-1 lg:order-2">
+              <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-muted-foreground mb-6">
+                <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> No signup fees</span>
+                <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> Unlimited bills</span>
+                <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> Instant PDF</span>
+                <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> GST compliant</span>
+                <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> Works offline</span>
+              </div>
               <HeroAnimation />
             </div>
 
@@ -558,15 +565,8 @@ export default function HomePage() {
                 Generate PDF instantly. Save all bills securely. Client address book. Multi-currency.
                 Drag-and-drop template builder. Dark mode. Works on mobile.
               </p>
-              <div className="flex flex-col sm:flex-row items-center lg:items-start gap-4 mb-6">
+              <div className="flex flex-col sm:flex-row items-center lg:items-start gap-4">
                 {cta}
-              </div>
-              <div className="flex flex-wrap justify-center lg:justify-start gap-x-5 gap-y-2 text-sm text-muted-foreground">
-                <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> No signup fees</span>
-                <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> Unlimited bills</span>
-                <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> Instant PDF</span>
-                <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> GST compliant</span>
-                <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> Works offline</span>
               </div>
             </div>
           </div>
