@@ -19,6 +19,14 @@ import {
   Truck,
   RotateCcw,
   UserCircle,
+  Home,
+  ShoppingBag,
+  RefreshCw,
+  ShoppingCart,
+  Wallet,
+  Heart,
+  Wrench,
+  Globe,
 } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -32,6 +40,14 @@ const TEMPLATE_ICONS: Record<string, React.ElementType> = {
   "delivery-challan": Truck,
   "credit-note": RotateCcw,
   "freelancer-invoice": UserCircle,
+  "rent-receipt": Home,
+  "shopping-receipt": ShoppingBag,
+  "subscription-invoice": RefreshCw,
+  "purchase-order": ShoppingCart,
+  "expense-report": Wallet,
+  "donation-receipt": Heart,
+  "service-invoice": Wrench,
+  "export-invoice": Globe,
 };
 
 const TEMPLATE_PREFIXES: Record<string, string> = {
@@ -43,6 +59,14 @@ const TEMPLATE_PREFIXES: Record<string, string> = {
   "delivery-challan": "DC",
   "credit-note": "CN",
   "freelancer-invoice": "FRL",
+  "rent-receipt": "RNT",
+  "shopping-receipt": "SHP",
+  "subscription-invoice": "SUB",
+  "purchase-order": "PO",
+  "expense-report": "EXP",
+  "donation-receipt": "DON",
+  "service-invoice": "SRV",
+  "export-invoice": "EXI",
 };
 
 function NewBillContent() {

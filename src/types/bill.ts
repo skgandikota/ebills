@@ -82,7 +82,15 @@ export type TemplateType =
   | "quotation"
   | "delivery-challan"
   | "credit-note"
-  | "freelancer-invoice";
+  | "freelancer-invoice"
+  | "rent-receipt"
+  | "shopping-receipt"
+  | "subscription-invoice"
+  | "purchase-order"
+  | "expense-report"
+  | "donation-receipt"
+  | "service-invoice"
+  | "export-invoice";
 
 export interface BillTemplate {
   id: TemplateType | string;

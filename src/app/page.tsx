@@ -27,6 +27,13 @@ import {
   Lock,
   Clock,
   Layers,
+  Home,
+  ShoppingBag,
+  RefreshCw,
+  ShoppingCart,
+  Wallet,
+  Heart,
+  Wrench,
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
@@ -283,10 +290,90 @@ const TEMPLATES = [
       "Designed for freelancers, consultants, and independent contractors. Features project summary, hourly rate display, milestone tracking, and a clean modern layout that looks great on any project.",
     useCases: ["Consulting fees", "Hourly billing", "Project milestones", "Contract work"],
   },
+  {
+    id: "rent-receipt",
+    icon: Home,
+    name: "Rent Receipt",
+    shortDesc: "Landlord & tenant",
+    color: "#854d0e",
+    longDesc:
+      "Generate rent receipts for monthly payments. Includes tenant name, property address, rental period, landlord PAN, and amount in words. Essential for HRA tax exemption claims in India.",
+    useCases: ["Monthly rent", "HRA claims", "Landlord records", "Tenant proof"],
+  },
+  {
+    id: "shopping-receipt",
+    icon: ShoppingBag,
+    name: "Shopping Receipt",
+    shortDesc: "Retail & store billing",
+    color: "#c026d3",
+    longDesc:
+      "Retail shopping receipt for stores, supermarkets, and shops. Includes itemized list with quantities, prices, tax, and total. Clean, compact format that looks like a real point-of-sale receipt.",
+    useCases: ["Retail stores", "Supermarkets", "Boutiques", "Online shops"],
+  },
+  {
+    id: "subscription-invoice",
+    icon: RefreshCw,
+    name: "Subscription Invoice",
+    shortDesc: "Recurring billing",
+    color: "#4f46e5",
+    longDesc:
+      "Invoice for recurring subscriptions, SaaS products, gym memberships, and service plans. Shows billing cycle, period start/end dates, plan details, and next payment date.",
+    useCases: ["SaaS billing", "Gym memberships", "Service plans", "Recurring fees"],
+  },
+  {
+    id: "purchase-order",
+    icon: ShoppingCart,
+    name: "Purchase Order",
+    shortDesc: "Procurement & buying",
+    color: "#0369a1",
+    longDesc:
+      "Official purchase order for procurement departments. Includes vendor details, delivery date, payment terms, shipping address, itemized goods list, and approval signatures.",
+    useCases: ["Corporate procurement", "Vendor orders", "Supply chain", "Bulk buying"],
+  },
+  {
+    id: "expense-report",
+    icon: Wallet,
+    name: "Expense Report",
+    shortDesc: "Employee reimbursement",
+    color: "#9333ea",
+    longDesc:
+      "Employee expense claim form for reimbursement. List all expenses with categories, dates, and amounts. Suitable for travel claims, office supplies, client entertainment, and business meals.",
+    useCases: ["Travel claims", "Office expenses", "Client meals", "Reimbursement"],
+  },
+  {
+    id: "donation-receipt",
+    icon: Heart,
+    name: "Donation Receipt",
+    shortDesc: "Charities & nonprofits",
+    color: "#be123c",
+    longDesc:
+      "Tax-deductible donation receipt for charities, NGOs, and nonprofits. Includes donor details, purpose, 80G registration number, and amount in words. Valid for Indian tax deductions.",
+    useCases: ["Charity donations", "NGO funding", "80G tax deduction", "Fundraisers"],
+  },
+  {
+    id: "service-invoice",
+    icon: Wrench,
+    name: "Service Invoice",
+    shortDesc: "Service providers",
+    color: "#ea580c",
+    longDesc:
+      "Professional service invoice for plumbers, electricians, mechanics, agencies, and consultants. Includes service description, labor hours, parts/materials, and total with tax.",
+    useCases: ["Plumbing", "Electrical work", "Repair services", "Agency billing"],
+  },
+  {
+    id: "export-invoice",
+    icon: Globe,
+    name: "Export Invoice",
+    shortDesc: "International trade",
+    color: "#065f46",
+    longDesc:
+      "International export invoice with customs details. Includes port of loading/discharge, country of origin/destination, IEC code, HSN codes, incoterms, and IGST. Essential for cross-border trade.",
+    useCases: ["International exports", "Customs clearance", "Cross-border trade", "Foreign buyers"],
+  },
 ];
 
 const FEATURES = [
-  { icon: FileText, title: "8+ Professional Templates", desc: "Standard Invoice, GST Invoice, Receipt, Quotation, Proforma, Delivery Challan, Credit Note, Freelancer Invoice — and custom templates you build yourself." },
+  { icon: FileText, title: "16 Professional Templates", desc: "Invoice, GST Invoice, Receipt, Quotation, Proforma, Delivery Challan, Credit Note, Freelancer, Rent Receipt, Shopping Receipt, Subscription, Purchase Order, Expense Report, Donation Receipt, Service Invoice, Export Invoice — plus custom templates." },
   { icon: Zap, title: "Instant PDF Download", desc: "Generate high-quality A4 PDFs directly in your browser. No server upload needed. Your data stays private." },
   { icon: Shield, title: "Secure Cloud Storage", desc: "Every bill is auto-saved to your private, encrypted cloud repository. Access from any device, anytime." },
   { icon: Users, title: "Client Address Book", desc: "Save client details once, reuse everywhere. Smart search and one-click autofill across all your bills." },
@@ -302,7 +389,7 @@ const FEATURES = [
 
 const STEPS = [
   { step: "1", title: "Sign In Free", desc: "One-click login with Google or GitHub. No forms, no credit card, no email verification." },
-  { step: "2", title: "Pick a Template & Fill", desc: "Choose from 8+ templates or build your own. Fill business, client, items — live preview updates instantly." },
+  { step: "2", title: "Pick a Template & Fill", desc: "Choose from 16 templates or build your own. Fill business, client, items — live preview updates instantly." },
   { step: "3", title: "Download, Save & Share", desc: "Download a professional A4 PDF. Your bill is auto-saved. Duplicate, edit, or re-download anytime." },
 ];
 
@@ -334,12 +421,18 @@ function JsonLd() {
           "GST Invoice",
           "Payment Receipt",
           "Quotation Maker",
+          "Rent Receipt Generator",
+          "Shopping Receipt",
+          "Subscription Invoice",
+          "Purchase Order",
+          "Expense Report",
+          "Donation Receipt",
+          "Service Invoice",
+          "Export Invoice",
           "PDF Download",
           "Multi-Currency",
           "Client Management",
           "Custom Template Builder",
-          "Dark Mode",
-          "PWA Support",
         ],
       },
       {
@@ -449,9 +542,9 @@ export default function HomePage() {
             In Seconds
           </h1>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-4">
-            Free online bill generator with <strong>8+ templates</strong> — Standard Invoice, GST Invoice,
-            Payment Receipt, Quotation, Proforma Invoice, Delivery Challan,
-            Credit Note &amp; Freelancer Invoice.
+            Free online bill generator with <strong>16 templates</strong> — Invoice, GST Invoice,
+            Receipt, Quotation, Rent Receipt, Shopping Receipt, Subscription Invoice,
+            Purchase Order, Expense Report, Donation Receipt &amp; more.
           </p>
           <p className="text-base text-muted-foreground max-w-2xl mx-auto mb-10">
             Generate PDF instantly. Save all bills securely. Client address book. Multi-currency.
@@ -666,7 +759,11 @@ export default function HomePage() {
             professional bills, invoices, and receipts in seconds. Whether you need a <strong>GST invoice</strong>,{" "}
             <strong>payment receipt</strong>, <strong>quotation</strong>, <strong>proforma invoice</strong>,{" "}
             <strong>delivery challan</strong>, <strong>credit note</strong>, or <strong>freelancer invoice</strong> —
-            eBills has the perfect template. <strong>Download PDF</strong> instantly with your business logo and branding.
+            eBills has the perfect template. Create <strong>rent receipts</strong> for HRA claims,
+            <strong>shopping receipts</strong> for retail stores, <strong>subscription invoices</strong> for SaaS,
+            <strong>purchase orders</strong>, <strong>expense reports</strong>, <strong>donation receipts</strong> for 80G,
+            <strong>service invoices</strong>, and <strong>export invoices</strong> for international trade.
+            <strong>Download PDF</strong> instantly with your business logo and branding.
           </p>
           <p className="text-sm text-muted-foreground leading-relaxed mb-4">
             Perfect for <strong>small businesses</strong>, <strong>freelancers</strong>, <strong>consultants</strong>,{" "}
@@ -678,7 +775,12 @@ export default function HomePage() {
             <strong>bill format download</strong>, <strong>receipt maker online</strong>,{" "}
             <strong>GST bill software free</strong>, <strong>online billing software</strong>,{" "}
             <strong>create invoice online free</strong>, <strong>professional invoice generator</strong>,{" "}
-            <strong>billing app</strong>, <strong>estimate maker</strong>, <strong>quotation generator free</strong>.
+            <strong>rent receipt generator</strong>, <strong>rent receipt for income tax</strong>,{" "}
+            <strong>shopping bill maker</strong>, <strong>subscription billing software</strong>,{" "}
+            <strong>purchase order template</strong>, <strong>expense report template</strong>,{" "}
+            <strong>donation receipt 80G</strong>, <strong>service invoice generator</strong>,{" "}
+            <strong>export invoice format</strong>, <strong>billing app</strong>, <strong>estimate maker</strong>,{" "}
+            <strong>quotation generator free</strong>.
           </p>
         </div>
       </section>
@@ -686,7 +788,7 @@ export default function HomePage() {
       {/* ── Footer ── */}
       <footer className="border-t py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid sm:grid-cols-3 gap-8 mb-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
             <div>
               <h3 className="font-bold text-lg mb-3">
                 e<span className="text-primary">Bills</span>
@@ -702,10 +804,23 @@ export default function HomePage() {
                 <li>GST Tax Invoice</li>
                 <li>Payment Receipt</li>
                 <li>Quotation / Estimate</li>
+                <li>Rent Receipt</li>
+                <li>Shopping Receipt</li>
+                <li>Subscription Invoice</li>
+                <li>Purchase Order</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold text-sm mb-3">More Templates</h4>
+              <ul className="space-y-1.5 text-sm text-muted-foreground">
                 <li>Proforma Invoice</li>
                 <li>Delivery Challan</li>
                 <li>Credit Note</li>
                 <li>Freelancer Invoice</li>
+                <li>Expense Report</li>
+                <li>Donation Receipt</li>
+                <li>Service Invoice</li>
+                <li>Export Invoice</li>
               </ul>
             </div>
             <div>
