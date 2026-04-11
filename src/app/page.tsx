@@ -29,7 +29,177 @@ import {
   Layers,
 } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+
+/* ─── Animated Hero Demo ─── */
+function HeroAnimation() {
+  const [step, setStep] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // 7 steps: 0=blank, 1=logo drops, 2=fields fill, 3=items fill, 4=pdf shrink, 5=email sent, 6=downloaded
+  useEffect(() => {
+    const DURATIONS = [800, 1000, 1200, 1000, 1000, 1200, 2000]; // ms per step
+    function advance() {
+      setStep((s) => {
+        const next = (s + 1) % 7;
+        timerRef.current = setTimeout(advance, DURATIONS[next]);
+        return next;
+      });
+    }
+    timerRef.current = setTimeout(advance, DURATIONS[0]);
+    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
+  }, []);
+
+  return (
+    <div className="relative w-full max-w-lg mx-auto mt-12" aria-hidden="true">
+      {/* Glow background */}
+      <div className="absolute -inset-4 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 rounded-3xl blur-2xl" />
+
+      <div className="relative bg-background border rounded-2xl shadow-2xl overflow-hidden">
+        {/* Mock title bar */}
+        <div className="flex items-center gap-1.5 px-4 py-2.5 bg-muted/60 border-b">
+          <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
+          <div className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
+          <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
+          <span className="ml-3 text-[10px] text-muted-foreground font-mono">ebills.co.in — Create Invoice</span>
+        </div>
+
+        <div className="p-5 sm:p-6 space-y-4 min-h-[280px]">
+          {/* Step 1 — Logo drops in */}
+          <div className="flex items-center justify-between">
+            <div
+              className={`w-12 h-12 rounded-lg bg-primary/10 border-2 border-dashed border-primary/30 flex items-center justify-center transition-all duration-500 ${
+                step >= 1 ? "opacity-100 translate-y-0 border-solid border-primary bg-primary/20" : "opacity-40 -translate-y-4"
+              }`}
+            >
+              {step >= 1 ? (
+                <svg className="w-7 h-7 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <rect x="3" y="3" width="18" height="18" rx="3" />
+                  <path d="M9 12l2 2 4-4" />
+                </svg>
+              ) : (
+                <span className="text-[8px] text-muted-foreground">Logo</span>
+              )}
+            </div>
+            <div className={`text-right transition-all duration-700 ${step >= 2 ? "opacity-100" : "opacity-30"}`}>
+              <div className="text-[10px] text-muted-foreground">Invoice #</div>
+              <div className={`text-sm font-bold font-mono ${step >= 2 ? "text-foreground" : "text-transparent"}`}>
+                <span className={step >= 2 ? "inline" : "hidden"}>INV-00042</span>
+                {step < 2 && <span className="bg-muted rounded w-16 h-4 inline-block" />}
+              </div>
+            </div>
+          </div>
+
+          {/* Step 2 — Business & client fields fill */}
+          <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-1.5">
+              <div className={`h-2.5 rounded-full transition-all duration-500 ${step >= 2 ? "bg-primary/60 w-3/4" : "bg-muted w-1/2"}`} />
+              <div className={`h-2 rounded-full transition-all duration-700 delay-100 ${step >= 2 ? "bg-muted-foreground/30 w-full" : "bg-muted w-2/3"}`} />
+              <div className={`h-2 rounded-full transition-all duration-700 delay-200 ${step >= 2 ? "bg-muted-foreground/20 w-5/6" : "bg-muted w-1/2"}`} />
+            </div>
+            <div className="space-y-1.5">
+              <div className={`h-2.5 rounded-full transition-all duration-600 delay-300 ${step >= 2 ? "bg-blue-400/60 w-2/3" : "bg-muted w-1/3"}`} />
+              <div className={`h-2 rounded-full transition-all duration-700 delay-400 ${step >= 2 ? "bg-muted-foreground/30 w-full" : "bg-muted w-2/3"}`} />
+              <div className={`h-2 rounded-full transition-all duration-700 delay-500 ${step >= 2 ? "bg-muted-foreground/20 w-4/5" : "bg-muted w-1/2"}`} />
+            </div>
+          </div>
+
+          {/* Step 3 — Items table fills */}
+          <div className={`border rounded-lg overflow-hidden transition-all duration-500 ${step >= 3 ? "opacity-100" : "opacity-40"}`}>
+            <div className="bg-muted/50 px-3 py-1.5 flex gap-2">
+              <div className="h-2 rounded bg-muted-foreground/40 w-1/3" />
+              <div className="h-2 rounded bg-muted-foreground/40 w-1/6" />
+              <div className="h-2 rounded bg-muted-foreground/40 w-1/6" />
+              <div className="h-2 rounded bg-muted-foreground/40 w-1/4" />
+            </div>
+            {[0, 1, 2].map((row) => (
+              <div
+                key={row}
+                className={`px-3 py-1.5 flex gap-2 border-t transition-all duration-500`}
+                style={{ transitionDelay: `${row * 150}ms`, opacity: step >= 3 ? 1 : 0.3 }}
+              >
+                <div className={`h-2 rounded w-1/3 ${step >= 3 ? "bg-foreground/20" : "bg-muted"}`} />
+                <div className={`h-2 rounded w-1/6 ${step >= 3 ? "bg-foreground/15" : "bg-muted"}`} />
+                <div className={`h-2 rounded w-1/6 ${step >= 3 ? "bg-foreground/15" : "bg-muted"}`} />
+                <div className={`h-2 rounded w-1/4 ${step >= 3 ? "bg-primary/40 font-bold" : "bg-muted"}`} />
+              </div>
+            ))}
+            <div className={`px-3 py-2 border-t bg-primary/5 flex justify-end gap-2 transition-all duration-500 ${step >= 3 ? "opacity-100" : "opacity-30"}`}>
+              <span className="text-[9px] font-semibold text-muted-foreground">Total:</span>
+              <div className={`h-2.5 rounded w-16 ${step >= 3 ? "bg-primary/50" : "bg-muted"}`} />
+            </div>
+          </div>
+
+          {/* Step 4-6 — Result actions */}
+          <div className={`flex items-center justify-center gap-6 pt-2 transition-all duration-700 ${step >= 4 ? "opacity-100" : "opacity-0 translate-y-4"}`}>
+            {/* PDF generated */}
+            <div className={`flex flex-col items-center gap-1 transition-all duration-500 ${step >= 4 ? "scale-100" : "scale-50"}`}>
+              <div className={`w-10 h-12 rounded-lg flex items-center justify-center transition-colors duration-300 ${step >= 4 ? "bg-red-500/15 text-red-500" : "bg-muted text-muted-foreground"}`}>
+                <svg className="w-5 h-6" viewBox="0 0 20 24" fill="currentColor">
+                  <path d="M0 2C0 .9.9 0 2 0h10l6 6v16c0 1.1-.9 2-2 2H2c-1.1 0-2-.9-2-2V2zm12 0v6h6L12 2zM4 14h10v1.5H4V14zm0 3h7v1.5H4V17z"/>
+                </svg>
+              </div>
+              <span className="text-[8px] font-medium text-muted-foreground">PDF Ready</span>
+              {step >= 4 && (
+                <div className="w-3.5 h-3.5 rounded-full bg-green-500 flex items-center justify-center animate-bounce">
+                  <Check className="w-2.5 h-2.5 text-white" />
+                </div>
+              )}
+            </div>
+
+            {/* Email sent */}
+            <div className={`flex flex-col items-center gap-1 transition-all duration-500 delay-300 ${step >= 5 ? "scale-100 opacity-100" : "scale-50 opacity-0"}`}>
+              <div className="w-10 h-10 rounded-lg bg-blue-500/15 text-blue-500 flex items-center justify-center">
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="2" y="4" width="20" height="16" rx="2" />
+                  <path d="M22 4L12 13 2 4" />
+                </svg>
+              </div>
+              <span className="text-[8px] font-medium text-muted-foreground">Emailed</span>
+              {step >= 5 && (
+                <div className="w-3.5 h-3.5 rounded-full bg-green-500 flex items-center justify-center animate-bounce" style={{ animationDelay: "200ms" }}>
+                  <Check className="w-2.5 h-2.5 text-white" />
+                </div>
+              )}
+            </div>
+
+            {/* Downloaded */}
+            <div className={`flex flex-col items-center gap-1 transition-all duration-500 delay-500 ${step >= 6 ? "scale-100 opacity-100" : "scale-50 opacity-0"}`}>
+              <div className="w-10 h-10 rounded-lg bg-green-500/15 text-green-500 flex items-center justify-center">
+                <Download className="w-5 h-5 animate-bounce" />
+              </div>
+              <span className="text-[8px] font-medium text-muted-foreground">Downloaded</span>
+              {step >= 6 && (
+                <div className="w-3.5 h-3.5 rounded-full bg-green-500 flex items-center justify-center animate-bounce" style={{ animationDelay: "400ms" }}>
+                  <Check className="w-2.5 h-2.5 text-white" />
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Typing cursor blinking on step 2-3 */}
+        {(step === 2 || step === 3) && (
+          <div className="absolute bottom-20 right-8 w-0.5 h-4 bg-primary animate-pulse" />
+        )}
+      </div>
+
+      {/* Step labels */}
+      <div className="flex justify-center gap-1.5 mt-4">
+        {["Logo", "Details", "Items", "PDF", "Email", "Save", "Done"].map((label, i) => (
+          <div key={label} className="flex flex-col items-center gap-1">
+            <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${
+              i === step ? "bg-primary scale-125" : i < step ? "bg-primary/40" : "bg-muted"
+            }`} />
+            <span className={`text-[7px] transition-colors duration-300 ${i === step ? "text-primary font-semibold" : "text-muted-foreground"}`}>
+              {label}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 /* ─── Template data with SEO-rich descriptions ─── */
 const TEMPLATES = [
@@ -297,6 +467,9 @@ export default function HomePage() {
             <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> GST compliant</span>
             <span className="flex items-center gap-1"><Check className="h-4 w-4 text-green-500" /> Works offline</span>
           </div>
+
+          {/* Animated Demo */}
+          <HeroAnimation />
         </div>
       </section>
 

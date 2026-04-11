@@ -9,29 +9,10 @@ import {
   FileText,
   Plus,
   ArrowRight,
-  IndianRupee,
-  ClipboardList,
-  Receipt,
-  Calculator,
-  Truck,
-  RotateCcw,
-  UserCircle,
 } from "lucide-react";
 import { listBills } from "@/lib/github";
-import { templates } from "@/lib/templates";
 import type { BillMeta } from "@/types/bill";
 import { formatCurrency } from "@/lib/pdf";
-
-const TEMPLATE_ICONS: Record<string, React.ElementType> = {
-  "standard-invoice": FileText,
-  "gst-invoice": IndianRupee,
-  "proforma-invoice": ClipboardList,
-  receipt: Receipt,
-  quotation: Calculator,
-  "delivery-challan": Truck,
-  "credit-note": RotateCcw,
-  "freelancer-invoice": UserCircle,
-};
 
 export default function DashboardPage() {
   const [bills, setBills] = useState<BillMeta[]>([]);
@@ -117,26 +98,6 @@ export default function DashboardPage() {
             </p>
           </CardContent>
         </Card>
-      </div>
-
-      {/* Quick Create */}
-      <div>
-        <h2 className="text-xl font-semibold mb-4">Quick Create</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {templates.map((t) => {
-            const Icon = TEMPLATE_ICONS[t.id] || FileText;
-            return (
-              <Link key={t.id} href={`/dashboard/bills/new?template=${t.id}`}>
-                <Card className="hover:shadow-md transition-shadow cursor-pointer h-full">
-                  <CardContent className="pt-4 pb-3 text-center">
-                    <Icon className="h-8 w-8 mx-auto mb-2 text-primary" />
-                    <p className="text-sm font-medium">{t.name}</p>
-                  </CardContent>
-                </Card>
-              </Link>
-            );
-          })}
-        </div>
       </div>
 
       {/* Recent Bills */}
