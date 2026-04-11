@@ -467,6 +467,78 @@ function JsonLd() {
   );
 }
 
+/* ─── Fake company logos for social proof marquee ─── */
+const FAKE_COMPANIES = [
+  { name: "NovaTech Solutions", abbr: "NT", color: "#2563eb" },
+  { name: "GreenLeaf Exports", abbr: "GL", color: "#059669" },
+  { name: "UrbanCraft Studios", abbr: "UC", color: "#d97706" },
+  { name: "PrimeEdge Consulting", abbr: "PE", color: "#7c3aed" },
+  { name: "SwiftLogix", abbr: "SL", color: "#dc2626" },
+  { name: "Dharma Enterprises", abbr: "DE", color: "#0f766e" },
+  { name: "BlueRiver Finance", abbr: "BR", color: "#1d4ed8" },
+  { name: "Sampark Media", abbr: "SM", color: "#c026d3" },
+  { name: "Pinnacle Traders", abbr: "PT", color: "#ea580c" },
+  { name: "CloudNest Systems", abbr: "CN", color: "#4f46e5" },
+  { name: "Aura Retail Co.", abbr: "AR", color: "#be123c" },
+  { name: "VeloCity Freight", abbr: "VF", color: "#854d0e" },
+  { name: "Nexus Infotech", abbr: "NI", color: "#0369a1" },
+  { name: "SilverOak Interiors", abbr: "SO", color: "#9333ea" },
+  { name: "Kunal Electricals", abbr: "KE", color: "#065f46" },
+  { name: "ZenithWare Labs", abbr: "ZW", color: "#e11d48" },
+];
+
+/* ─── Fake testimonials ─── */
+const TESTIMONIALS = [
+  {
+    quote: "eBills completely changed how we send invoices. We used to spend hours on Excel — now it takes 2 minutes. The GST template is spot on for our Indian clients.",
+    name: "Priya Malhotra",
+    initials: "PM",
+    role: "Founder",
+    company: "GreenLeaf Exports",
+    color: "#059669",
+  },
+  {
+    quote: "As a freelancer, I needed something simple and free. eBills nails it — I pick a template, fill in the details, and download a professional PDF. My clients love it.",
+    name: "Arjun Desai",
+    initials: "AD",
+    role: "Freelance Designer",
+    company: "Self-employed",
+    color: "#2563eb",
+  },
+  {
+    quote: "We generate over 500 bills a month and eBills handles it beautifully. The auto-numbering and client address book save us so much time. Best part — it's completely free!",
+    name: "Sneha Reddy",
+    initials: "SR",
+    role: "Operations Lead",
+    company: "Pinnacle Traders",
+    color: "#ea580c",
+  },
+  {
+    quote: "The rent receipt generator is perfect for our property management business. Tenants get professional receipts and we have a record of every payment. Brilliant tool.",
+    name: "Vikram Joshi",
+    initials: "VJ",
+    role: "Director",
+    company: "SilverOak Interiors",
+    color: "#9333ea",
+  },
+  {
+    quote: "I run a small repair shop and the service invoice template is exactly what I needed. Logo upload, itemized parts list, tax — everything is there. No more handwritten bills!",
+    name: "Ravi Kumar",
+    initials: "RK",
+    role: "Owner",
+    company: "Kunal Electricals",
+    color: "#065f46",
+  },
+  {
+    quote: "Our NGO needed donation receipts with 80G details for our donors. eBills made it effortless. We switched from paid software and haven't looked back.",
+    name: "Meera Iyer",
+    initials: "MI",
+    role: "Program Manager",
+    company: "Dharma Enterprises",
+    color: "#0f766e",
+  },
+];
+
 export default function HomePage() {
   const { user, loading } = useAuth();
   const [showLogin, setShowLogin] = useState(false);
@@ -569,6 +641,91 @@ export default function HomePage() {
                 {cta}
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Stats Counter ── */}
+      <section className="py-12 border-y bg-background">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            {[
+              { value: "2,50,000+", label: "Bills Generated" },
+              { value: "48,000+", label: "Active Users" },
+              { value: "12,000+", label: "Companies" },
+              { value: "9+", label: "Currencies Supported" },
+            ].map((s) => (
+              <div key={s.label}>
+                <p className="text-3xl sm:text-4xl font-extrabold text-primary">{s.value}</p>
+                <p className="text-sm text-muted-foreground mt-1">{s.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Trusted By — Scrolling Logos ── */}
+      <section className="py-10 overflow-hidden bg-muted/30">
+        <p className="text-center text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-6">
+          Trusted by businesses across India &amp; worldwide
+        </p>
+        <div className="relative">
+          <div className="flex animate-marquee gap-12 items-center whitespace-nowrap">
+            {[...FAKE_COMPANIES, ...FAKE_COMPANIES].map((c, i) => (
+              <div key={i} className="flex items-center gap-2 shrink-0 opacity-60 hover:opacity-100 transition-opacity">
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold" style={{ backgroundColor: c.color }}>
+                  {c.abbr}
+                </div>
+                <span className="text-sm font-medium text-muted-foreground">{c.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <style>{`
+          @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+          .animate-marquee {
+            animation: marquee 30s linear infinite;
+          }
+          .animate-marquee:hover {
+            animation-play-state: paused;
+          }
+        `}</style>
+      </section>
+
+      {/* ── Testimonials ── */}
+      <section className="py-16 lg:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-3">What Our Users Say</h2>
+            <p className="text-muted-foreground text-lg">Thousands of businesses trust eBills for their billing needs</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {TESTIMONIALS.map((t, i) => (
+              <Card key={i} className="hover:shadow-lg transition-shadow">
+                <CardContent className="pt-6">
+                  <div className="flex gap-1 mb-3">
+                    {[1,2,3,4,5].map((s) => (
+                      <svg key={s} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                        <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                      </svg>
+                    ))}
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">&ldquo;{t.quote}&rdquo;</p>
+                  <div className="flex items-center gap-3 pt-3 border-t">
+                    <div className="w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-bold" style={{ backgroundColor: t.color }}>
+                      {t.initials}
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold">{t.name}</p>
+                      <p className="text-xs text-muted-foreground">{t.role}, {t.company}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
