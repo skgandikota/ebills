@@ -141,14 +141,19 @@ function BillViewContent() {
             <Download className="h-4 w-4 mr-2" />
             PDF
           </Button>
-          <Link
-            href={`/dashboard/bills/new?template=${bill.templateId}`}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              try {
+                sessionStorage.setItem("duplicate-bill", JSON.stringify(bill));
+              } catch { /* ignore */ }
+              router.push(`/dashboard/bills/new?template=${bill.templateId}&duplicate=1`);
+            }}
           >
-            <Button variant="outline" size="sm">
-              <Copy className="h-4 w-4 mr-2" />
-              Duplicate
-            </Button>
-          </Link>
+            <Copy className="h-4 w-4 mr-2" />
+            Duplicate
+          </Button>
           <Button
             variant="outline"
             size="sm"

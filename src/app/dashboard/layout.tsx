@@ -13,7 +13,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LayoutDashboard, FileText, Plus, LogOut, Settings } from "lucide-react";
+import { LayoutDashboard, FileText, Plus, LogOut, Settings, Paintbrush } from "lucide-react";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 
 export default function DashboardLayout({
   children,
@@ -74,10 +75,18 @@ export default function DashboardLayout({
                   Create Bill
                 </Button>
               </Link>
+              <Link href="/dashboard/builder">
+                <Button variant="ghost" size="sm" className="gap-2">
+                  <Paintbrush className="h-4 w-4" />
+                  Builder
+                </Button>
+              </Link>
             </div>
           </div>
 
-          <DropdownMenu>
+          <div className="flex items-center gap-1">
+            <ThemeToggle />
+            <DropdownMenu>
             <DropdownMenuTrigger
               className="flex items-center gap-2 h-10 px-3 rounded-md hover:bg-accent hover:text-accent-foreground cursor-pointer"
             >
@@ -121,6 +130,7 @@ export default function DashboardLayout({
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          </div>
         </div>
       </nav>
 

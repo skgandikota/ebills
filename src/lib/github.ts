@@ -1,6 +1,6 @@
 import { Octokit } from "@octokit/rest";
 import { getGitHubToken } from "./token-broker";
-import type { BillData, BillMeta, UserMetadata } from "@/types/bill";
+import type { BillData, BillMeta, BillTemplate, UserMetadata } from "@/types/bill";
 
 let octokit: Octokit | null = null;
 let currentRepo = "";
@@ -125,7 +125,7 @@ export async function saveUserMetadata(metadata: UserMetadata): Promise<void> {
 
 // --- Custom Templates ---
 
-export async function listCustomTemplates(): Promise<string[]> {
+export async function listCustomTemplates(): Promise<BillTemplate[]> {
   const { client, owner, repo } = await getClient();
   try {
     const { data } = await client.repos.getContent({
@@ -134,17 +134,26 @@ export async function listCustomTemplates(): Promise<string[]> {
       path: "templates",
     });
     if (!Array.isArray(data)) return [];
-    return data
-      .filter((f) => f.name.endsWith(".json"))
-      .map((f) => f.name.replace(".json", ""));
+    const jsonFiles = data.filter((f) => f.name.endsWith(".json"));
+    const templates: BillTemplate[] = [];
+    for (const file of jsonFiles) {
+      try {
+        const content = await getFileContent(client, owner, repo, `templates/${file.name}`);
+        if (content) {
+          templates.push(JSON.parse(content) as BillTemplate);
+        }
+      } catch {
+        // skip corrupt files
+      }
+    }
+    return templates;
   } catch {
     return [];
   }
 }
 
 export async function saveCustomTemplate(
-  id: string,
-  template: Record<string, unknown>
+  template: BillTemplate
 ): Promise<void> {
   const { client, owner, repo } = await getClient();
   const content = JSON.stringify(template, null, 2);
@@ -152,9 +161,9 @@ export async function saveCustomTemplate(
     client,
     owner,
     repo,
-    `templates/${id}.json`,
+    `templates/${template.id}.json`,
     content,
-    `Save template ${id}`
+    `Save template ${template.name}`
   );
 }
 

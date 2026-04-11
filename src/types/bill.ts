@@ -88,8 +88,8 @@ export interface BillTemplate {
   id: TemplateType | string;
   name: string;
   description: string;
-  category: "invoice" | "receipt" | "quotation" | "other";
-  icon: string; // Lucide icon name
+  category?: "invoice" | "receipt" | "quotation" | "other";
+  icon?: string; // Lucide icon name
   fields: TemplateField[];
   showTax: boolean;
   showDiscount: boolean;
@@ -98,20 +98,29 @@ export interface BillTemplate {
   showHsnCode: boolean;
   showGstin: boolean;
   defaultCurrency: string;
+  color?: string; // Primary color hex
+  accentColor?: string; // Accent color hex
 }
 
 export interface TemplateField {
-  key: string;
+  id?: string;
+  key?: string;
   label: string;
-  type: "text" | "number" | "date" | "textarea" | "select";
-  required: boolean;
+  type: "text" | "number" | "date" | "textarea" | "select"
+    | "header" | "business-info" | "client-info" | "items-table"
+    | "totals" | "notes" | "terms" | "signature" | "divider" | "custom-text";
+  required?: boolean;
   placeholder?: string;
   options?: string[]; // For select fields
-  section: "business" | "client" | "bill" | "items" | "summary";
+  section?: "business" | "client" | "bill" | "items" | "summary";
+  order?: number;
+  config?: Record<string, string | boolean>;
 }
 
 export interface UserMetadata {
   nextBillNumber: number;
+  /** Per-template-type counters: e.g. { "gst-invoice": 5, "receipt": 12 } */
+  templateCounters?: Record<string, number>;
   defaultBusiness?: BusinessInfo;
   savedClients: ClientInfo[];
   customTemplates: string[]; // IDs of custom templates

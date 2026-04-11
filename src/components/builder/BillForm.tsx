@@ -17,6 +17,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Plus, Trash2, Save, Download } from "lucide-react";
 import { BillPreview } from "@/components/templates/BillPreview";
+import { ClientPicker } from "@/components/builder/ClientPicker";
+import { LogoUpload } from "@/components/builder/LogoUpload";
 import { generatePDF, downloadBlob, generateBillId } from "@/lib/pdf";
 
 const CURRENCIES = [
@@ -295,6 +297,14 @@ export function BillForm({ template, initialData, billNumber, onSave }: BillForm
             <CardTitle className="text-lg">Your Business</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
+            <div className="mb-4">
+              <Label className="mb-2 block">Logo</Label>
+              <LogoUpload
+                currentLogo={bill.business.logo}
+                onLogoChange={(dataUrl) => updateBusiness("logo", dataUrl)}
+                onLogoRemove={() => updateBusiness("logo", "")}
+              />
+            </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="col-span-2">
                 <Label>Business Name</Label>
@@ -381,7 +391,15 @@ export function BillForm({ template, initialData, billNumber, onSave }: BillForm
         {/* Client Info */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Bill To (Client)</CardTitle>
+            <div className="flex justify-between items-center">
+              <CardTitle className="text-lg">Bill To (Client)</CardTitle>
+              <ClientPicker
+                currentClient={bill.client}
+                onSelect={(client) =>
+                  setBill((prev) => recalculate({ ...prev, client }))
+                }
+              />
+            </div>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
