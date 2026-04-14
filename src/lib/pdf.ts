@@ -8,12 +8,27 @@ export async function generatePDF(
   const element = document.getElementById(elementId);
   if (!element) throw new Error(`Element #${elementId} not found`);
 
+  // Temporarily remove any scale transform on parent for accurate capture
+  const scaledParent = element.closest("[class*='scale-']") as HTMLElement | null;
+  const originalTransform = scaledParent?.style.transform;
+  const originalWidth = scaledParent?.style.width;
+  if (scaledParent) {
+    scaledParent.style.transform = "none";
+    scaledParent.style.width = "auto";
+  }
+
   const canvas = await html2canvas(element, {
     scale: 2,
     useCORS: true,
     logging: false,
     backgroundColor: "#ffffff",
   });
+
+  // Restore transform
+  if (scaledParent) {
+    scaledParent.style.transform = originalTransform || "";
+    scaledParent.style.width = originalWidth || "";
+  }
 
   const imgData = canvas.toDataURL("image/png");
   const pdf = new jsPDF("p", "mm", "a4");
