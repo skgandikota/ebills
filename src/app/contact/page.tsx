@@ -59,7 +59,7 @@ export default function ContactPage() {
               </div>
               <h3 className="font-semibold mb-2">GitHub Issues</h3>
               <a
-                href="https://github.com/skgandikota/ebills-platform.github.io/issues"
+                href="https://github.com/skgandikota/ebills/issues"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-primary hover:underline"
