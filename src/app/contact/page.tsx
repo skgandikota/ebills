@@ -33,13 +33,31 @@ export default function ContactPage() {
           </p>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-3 mb-16">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-16">
           <Card>
             <CardContent className="p-6 text-center">
               <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
                 <Mail className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="font-semibold mb-2">Email</h3>
+              <h3 className="font-semibold mb-2">General Inquiries</h3>
+              <a
+                href="mailto:info@ebills.co.in"
+                className="text-sm text-primary hover:underline"
+              >
+                info@ebills.co.in
+              </a>
+              <p className="text-xs text-muted-foreground mt-2">
+                For partnerships, press, and general questions
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-6 text-center">
+              <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                <Mail className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="font-semibold mb-2">Support</h3>
               <a
                 href="mailto:support@ebills.co.in"
                 className="text-sm text-primary hover:underline"
@@ -47,7 +65,7 @@ export default function ContactPage() {
                 support@ebills.co.in
               </a>
               <p className="text-xs text-muted-foreground mt-2">
-                For general inquiries, support, and feedback
+                For bug reports, help, and feedback
               </p>
             </CardContent>
           </Card>

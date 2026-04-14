@@ -158,8 +158,8 @@ export default function PrivacyPolicyPage() {
             <h2 className="text-xl font-bold mb-3">11. Contact Us</h2>
             <p className="text-muted-foreground leading-relaxed">
               If you have questions about this Privacy Policy or our data practices, contact us at:{" "}
-              <a href="mailto:support@ebills.co.in" className="text-primary hover:underline">
-                support@ebills.co.in
+              <a href="mailto:info@ebills.co.in" className="text-primary hover:underline">
+                info@ebills.co.in
               </a>
             </p>
           </section>

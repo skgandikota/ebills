@@ -1001,6 +1001,12 @@ export default function HomePage() {
                 <li><Link href="/privacy" className="hover:text-foreground">Privacy Policy</Link></li>
                 <li><Link href="/terms" className="hover:text-foreground">Terms of Service</Link></li>
                 <li><Link href="/disclaimer" className="hover:text-foreground">Disclaimer</Link></li>
+                <li className="pt-2 border-t">
+                  <a href="mailto:info@ebills.co.in" className="hover:text-foreground">info@ebills.co.in</a>
+                </li>
+                <li>
+                  <a href="mailto:support@ebills.co.in" className="hover:text-foreground">support@ebills.co.in</a>
+                </li>
               </ul>
             </div>
           </div>

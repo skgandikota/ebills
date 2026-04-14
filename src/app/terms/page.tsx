@@ -170,8 +170,8 @@ export default function TermsPage() {
             <h2 className="text-xl font-bold mb-3">14. Contact</h2>
             <p className="text-muted-foreground leading-relaxed">
               For questions about these Terms, contact us at:{" "}
-              <a href="mailto:support@ebills.co.in" className="text-primary hover:underline">
-                support@ebills.co.in
+              <a href="mailto:info@ebills.co.in" className="text-primary hover:underline">
+                info@ebills.co.in
               </a>
             </p>
           </section>
