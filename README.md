@@ -1,8 +1,39 @@
 # eBills — Free Online Bill & Invoice Generator
 
-> **Zero-cost, serverless billing platform** serving Indian businesses at [ebills.co.in](https://ebills.co.in)
+<p align="center">
+  <a href="https://ebills.co.in">
+    <img src="https://img.shields.io/badge/🌐_Live_Demo-ebills.co.in-blue?style=for-the-badge" alt="Live Demo" />
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/skgandikota/ebills/stargazers"><img src="https://img.shields.io/github/stars/skgandikota/ebills?style=social" alt="Stars" /></a>
+  <a href="https://github.com/skgandikota/ebills/fork"><img src="https://img.shields.io/github/forks/skgandikota/ebills?style=social" alt="Forks" /></a>
+  <img src="https://img.shields.io/badge/cost-$0%2Fmonth-brightgreen" alt="$0/month" />
+  <img src="https://img.shields.io/badge/templates-16-orange" alt="16 Templates" />
+  <img src="https://img.shields.io/badge/license-MIT-blue" alt="License" />
+  <a href="https://github.com/skgandikota/ebills/actions"><img src="https://github.com/skgandikota/ebills/actions/workflows/deploy.yml/badge.svg" alt="Deploy Status" /></a>
+</p>
+
+> **Zero-cost, serverless billing platform** serving businesses at [ebills.co.in](https://ebills.co.in) build by an Indian with ❤️ for the world 🌍
 >
 > No servers. No databases. No monthly bills. Just professional invoicing.
+
+<p align="center">
+  <img src="docs/screenshots/hero.png" alt="eBills Dashboard" width="800" />
+</p>
+
+<p align="center">
+  <strong>⭐ If you find this useful, please star the repo — it helps others discover it!</strong>
+</p>
+
+## Demo
+
+| Landing Page | Bill Editor | PDF Preview | Saved Bills |
+|:---:|:---:|:---:|:---:|
+| <img src="docs/screenshots/landing.png" width="200" /> | <img src="docs/screenshots/editor.png" width="200" /> | <img src="docs/screenshots/pdf.png" width="200" /> | <img src="docs/screenshots/MySavedBills.png" width="200" /> |
+
+> **Try it live →** [ebills.co.in](https://ebills.co.in) — No signup required to explore templates
 
 ---
 
@@ -241,6 +272,17 @@ Most billing SaaS platforms charge ₹500–2,000/month and lock your data in th
 5. **User data in their own repo = zero liability** — We're not a data processor
 
 The entire stack runs within free tiers of established platforms, making it genuinely sustainable at $0/month regardless of user count.
+
+---
+
+## Support
+
+If eBills saves you time or money (well, it's free, so definitely money), consider:
+
+- ⭐ **[Star this repo](https://github.com/skgandikota/ebills)** — helps others find it
+- 🍴 **[Fork it](https://github.com/skgandikota/ebills/fork)** — build your own version
+- 🐛 **[Report issues](https://github.com/skgandikota/ebills/issues)** — help us improve
+- 📣 **Share it** — tell a freelancer or small business owner
 
 ---
 
